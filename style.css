@@ -108,19 +108,21 @@ color: var(--hero-muted); font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1
 
 /* ========================= HERO LINKS ========================= */
 
-.links { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
+.links { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
 
-.links a { color: var(--hero-text); font-family: monospace; font-size: 0.75rem; text-decoration: none;
-
-transition: color 180ms ease, background-color 180ms ease; }
+.links a { color: var(--hero-text); font-family: monospace; font-size: 0.75rem; text-decoration: none; transition: color 180ms ease, background-color 180ms ease; }
 
 .links a:hover { color: var(--hero-accent); }
 
-.links .primary-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px;
-
-padding: 15px 18px; border: 1px solid var(--hero-text); }
+.links .primary-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; padding: 15px 18px; border: 1px solid var(--hero-text); }
 
 .links .primary-link:hover { color: var(--hero-bg); background: var(--hero-text); }
+
+.social-links { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
+
+.social-links a { color: var(--hero-text); font-family: monospace; font-size: 0.75rem; text-decoration: none; transition: color 180ms ease; }
+
+.social-links a:hover { color: var(--hero-accent); }
 
 /* ========================= D3.JS VISUALIZATION ========================= */
 
