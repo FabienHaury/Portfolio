@@ -108,21 +108,45 @@ color: var(--hero-muted); font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1
 
 /* ========================= HERO LINKS ========================= */
 
-.links { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
 
-.links a { color: var(--hero-text); font-family: monospace; font-size: 0.75rem; text-decoration: none; transition: color 180ms ease, background-color 180ms ease; }
+.links .primary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 18px;
+  border: 1px solid var(--hero-text);
+}
 
-.links a:hover { color: var(--hero-accent); }
+.links .primary-link:hover {
+  color: var(--hero-bg);
+  background: var(--hero-text);
+}
 
-.links .primary-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 20px; padding: 15px 18px; border: 1px solid var(--hero-text); }
+.social-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+}
 
-.links .primary-link:hover { color: var(--hero-bg); background: var(--hero-text); }
+.links .social-links a {
+  color: var(--hero-text);
+  font-family: monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: color 180ms ease;
+}
 
-.social-links { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
-
-.social-links a { color: var(--hero-text); font-family: monospace; font-size: 0.75rem; text-decoration: none; transition: color 180ms ease; }
-
-.social-links a:hover { color: var(--hero-accent); }
+.links .social-links a:hover {
+  color: var(--hero-accent);
+}
 
 /* ========================= D3.JS VISUALIZATION ========================= */
 
@@ -458,10 +482,14 @@ body.dark footer a { color: #60a5fa; }
 
 .avatar { width: 56px; height: 56px; margin-bottom: 26px; }
 
-.links { gap: 18px; }
+.links {
+  gap: 18px;
+}
 
-.links .primary-link { width: 100%; }
+.links .primary-link {
+  width: auto;
+}
 
 .hero-bottom { font-size: 0.6rem; }
 
-.theme-toggle { top: 12px; right: 12px; width: 38
+.theme-toggle { top: 12px; right: 12px; width: 38;}
