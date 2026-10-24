@@ -13,9 +13,9 @@
     {
       "name": "D3.js",
       "projects": [{
-          "name": "Pokemon project",
-          "description": "An interactive Pokémon explorer.",
-          "url": "https://fabienhaury.github.io/react-foundation/"
+          "name": "Place holder",
+          "description": "Descriptive Place holder.",
+          "url": "https://example.com/data-explorer"
         }]
     }
   ]
