@@ -1,7 +1,7 @@
 {
   "sections": [
     {
-      "name": "React Foundation",
+      "name": " Wen Foundation: React Foundation",
       "projects": [
         {
           "name": "Pokemon project",
@@ -11,11 +11,11 @@
       ]
     },
     {
-      "name": "Place holder Name",
+      "name": "Main course: Introduction",
       "projects": [{
-          "name": "Place holder",
-          "description": "Descriptive Place holder.",
-          "url": "https://example.com/data-explorer"
+          "name": "Where our students come from",
+          "description": "First and simple graphs made with D3.js & react.",
+          "url": "https://fabienhaury.github.io/Introduction-first-graph/"
         }]
     }
   ]
