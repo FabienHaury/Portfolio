@@ -1,7 +1,8 @@
+
 {
   "sections": [
     {
-      "name": " Web Foundation: React Foundation",
+      "name": "Web Foundation: React Foundation",
       "projects": [
         {
           "name": "Pokemon project",
@@ -12,11 +13,23 @@
     },
     {
       "name": "Main course: Introduction",
-      "projects": [{
+      "projects": [
+        {
           "name": "Where our students come from",
-          "description": "First and simple graphs made with D3.js & react.",
+          "description": "First and simple graphs made with D3.js & React.",
           "url": "https://fabienhaury.github.io/Introduction-first-graph/"
-        }]
+        }
+      ]
+    },
+    {
+      "name": "Main course: SVG",
+      "projects": [
+        {
+          "name": "The Pie Chart Experiment",
+          "description": "Exploring pie charts, their limitations, and better data visualization alternatives with D3.js & React.",
+          "url": "https://fabienhaury.github.io/svg/"
+        }
+      ]
     }
   ]
 }
