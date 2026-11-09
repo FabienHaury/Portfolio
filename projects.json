@@ -30,6 +30,16 @@
           "url": "https://fabienhaury.github.io/svg/"
         }
       ]
+    },
+    {
+      "name": "Main course: scales",
+      "projects": [
+        {
+          "name": "Recreating The Economist!",
+          "description": "Recreation of one of The Economist's graphics, demonstrating an understanding of scales with D3.js.",
+          "url": "https://fabienhaury.github.io/scales/"
+        }
+      ]
     }
   ]
 }
