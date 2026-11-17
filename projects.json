@@ -40,6 +40,16 @@
           "url": "https://fabienhaury.github.io/scales/"
         }
       ]
+    },
+    {
+      "name": "Main course: axes",
+      "projects": [
+        {
+          "name": "Creating and understanding axes.",
+          "description": "Data visualization exploring global patterns through different scales and clustering methods.",
+          "url": "https://fabienhaury.github.io/axes/"
+        }
+      ]
     }
   ]
 }
