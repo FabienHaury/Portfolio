@@ -1,40 +1,172 @@
 import json
+import re
 from html import escape
 from pathlib import Path
+from urllib.parse import urlparse
+
+
+# =========================
+# CONFIGURATION
+# =========================
 
 ROOT = Path(__file__).resolve().parent
 
 INDEX = ROOT / "index.html"
+
 PROJECTS_FILE = ROOT / "projects.json"
+
 PERSONAL_FILE = ROOT / "personal-projects.json"
 
+PREVIEW_DIR = ROOT / "Images" / "previews"
+
 COURSE_PLACEHOLDER = "<!-- COURSE_LISTINGS -->"
+
 PERSONAL_PLACEHOLDER = "<!-- PERSONAL_PROJECT_LISTINGS -->"
 
 
 # =========================
-# LOAD JSON
+# HELPERS
 # =========================
 
 def load_json(path):
+
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
+        return json.loads(
+            path.read_text(encoding="utf-8")
+        )
+
     except FileNotFoundError:
-        raise SystemExit(f"Missing JSON file: {path}")
+        raise SystemExit(
+            f"Missing JSON file: {path}"
+        )
+
     except json.JSONDecodeError as exc:
-        raise SystemExit(f"Invalid JSON in {path}: {exc}")
+        raise SystemExit(
+            f"Invalid JSON in {path}: {exc}"
+        )
+
+
+def safe_filename(name):
+
+    return re.sub(
+        r"[^a-z0-9]+",
+        "-",
+        name.lower()
+    ).strip("-")
+
+
+def valid_url(url):
+
+    try:
+        parsed = urlparse(url)
+
+        return (
+            parsed.scheme in ("http", "https")
+            and bool(parsed.netloc)
+        )
+
+    except ValueError:
+        return False
 
 
 # =========================
-# RENDER A PROJECT CARD
+# RENDER PROJECT CARD
 # =========================
 
 def render_project(project):
-    name = escape(str(project["name"]))
-    description = escape(str(project.get("description", "")))
-    url = escape(str(project["url"]), quote=True)
 
-    # Optional project languages
+    name = escape(
+        str(project["name"])
+    )
+
+    description = escape(
+        str(project.get("description", ""))
+    )
+
+    url = str(project.get("url", ""))
+
+    if not valid_url(url):
+        raise SystemExit(
+            f"Invalid project URL: {project['name']}"
+        )
+
+    url = escape(url, quote=True)
+
+    project_type = project.get("type", "")
+
+    # -------------------------
+    # PROJECT IMAGE
+    # -------------------------
+
+    image = project.get("image", "")
+
+    if project_type in ("website", "interactive"):
+
+        preview_path = (
+            PREVIEW_DIR
+            / (safe_filename(project["name"]) + ".png")
+        )
+
+        if preview_path.is_file():
+
+            image = (
+                "./Images/previews/"
+                + preview_path.name
+            )
+
+        else:
+            image = ""
+
+    image_html = ""
+
+    if image:
+
+        image = escape(
+            str(image),
+            quote=True
+        )
+
+        image_html = (
+            '    <div class="project-preview">\n'
+            f'      <img src="{image}" '
+            f'alt="{name} preview" loading="lazy">\n'
+            '    </div>\n'
+        )
+
+    # -------------------------
+    # PROJECT TYPE
+    # -------------------------
+
+    type_html = ""
+
+    if project_type:
+
+        type_label = escape(
+            str(project_type).capitalize()
+        )
+
+        type_html = (
+            f'    <span class="project-type">'
+            f'{type_label}</span>\n'
+        )
+
+    # -------------------------
+    # DESCRIPTION
+    # -------------------------
+
+    description_html = ""
+
+    if description:
+
+        description_html = (
+            f'    <p class="project-description">'
+            f'{description}</p>\n'
+        )
+
+    # -------------------------
+    # LANGUAGES
+    # -------------------------
+
     languages = project.get("languages", [])
 
     if not isinstance(languages, list):
@@ -49,8 +181,10 @@ def render_project(project):
     languages_html = ""
 
     if languages:
+
         language_tags = "\n".join(
-            f'      <span class="language-tag">{escape(language)}</span>'
+            f'      <span class="language-tag">'
+            f'{escape(language)}</span>'
             for language in languages
         )
 
@@ -60,34 +194,38 @@ def render_project(project):
             '    </div>\n'
         )
 
-    description_html = (
-        f'    <p class="project-description">{description}</p>\n'
-        if description else ""
-    )
+    # -------------------------
+    # FINAL CARD
+    # -------------------------
 
     return (
         '<li class="project-card">\n'
         f'  <a class="project-card-link" href="{url}" '
         'target="_blank" rel="noopener noreferrer">\n'
+        f'{image_html}'
         f'    <h4>{name}</h4>\n'
+        f'{type_html}'
         f'{description_html}'
         f'{languages_html}'
-        '    <span class="project-arrow" aria-hidden="true">↗</span>\n'
+        '    <span class="project-arrow" '
+        'aria-hidden="true">↗</span>\n'
         '  </a>\n'
         '</li>'
     )
 
 
 # =========================
-# RENDER A PROJECT LIST
+# RENDER PROJECT LIST
 # =========================
 
 def render_project_list(projects):
+
     if not projects:
         return ""
 
     items = "\n".join(
-        render_project(project) for project in projects
+        render_project(project)
+        for project in projects
     )
 
     return (
@@ -98,29 +236,81 @@ def render_project_list(projects):
 
 
 # =========================
+# RENDER NESTED CONTENT
+# =========================
+
+def render_nested_content(section, heading_level=4):
+
+    content = []
+
+    # Direct projects
+
+    projects = section.get("projects", [])
+
+    if projects:
+
+        content.append(
+            render_project_list(projects)
+        )
+
+    # Nested subsections
+
+    for subsection in section.get(
+        "subsections", []
+    ):
+
+        subsection_name = escape(
+            str(subsection["name"])
+        )
+
+        subcontent = render_nested_content(
+            subsection,
+            min(heading_level + 1, 6)
+        )
+
+        if not subcontent:
+            continue
+
+        heading = f"h{heading_level}"
+
+        content.append(
+            '<section class="course-subsection">\n'
+            f'  <{heading}>{subsection_name}</{heading}>\n'
+            f'{subcontent}\n'
+            '</section>'
+        )
+
+    return "\n".join(content)
+
+
+# =========================
 # RENDER D3.JS COURSE
 # =========================
 
 def render_course(data):
+
     sections_html = []
 
     for section in data.get("sections", []):
-        projects = section.get("projects", [])
 
-        if not projects:
+        content = render_nested_content(section)
+
+        if not content:
             continue
 
-        section_name = escape(str(section["name"]))
-        project_list = render_project_list(projects)
+        section_name = escape(
+            str(section["name"])
+        )
 
         sections_html.append(
             '<section class="course-section">\n'
             f'  <h3>{section_name}</h3>\n'
-            f'  {project_list}\n'
+            f'{content}\n'
             '</section>'
         )
 
     if not sections_html:
+
         return (
             '<p class="course-empty">'
             'Projects will appear here as they are added.'
@@ -132,54 +322,32 @@ def render_course(data):
 
 # =========================
 # RENDER PERSONAL PROJECTS
-# Supports:
-# - Sections with direct projects
-# - Sections with nested subsections
-# - Sections containing both
 # =========================
 
 def render_personal_projects(data):
+
     sections_html = []
 
     for section in data.get("sections", []):
-        section_name = escape(str(section["name"]))
-        content = []
 
-        # Projects directly inside the section
-        projects = section.get("projects", [])
+        content = render_nested_content(section)
 
-        if projects:
-            content.append(render_project_list(projects))
-
-        # Nested subsections
-        for subsection in section.get("subsections", []):
-            subsection_name = escape(str(subsection["name"]))
-            subprojects = subsection.get("projects", [])
-
-            if not subprojects:
-                continue
-
-            project_list = render_project_list(subprojects)
-
-            content.append(
-                '<section class="course-section">\n'
-                f'  <h4>{subsection_name}</h4>\n'
-                f'  {project_list}\n'
-                '</section>'
-            )
-
-        # Skip sections without projects or subsections
         if not content:
             continue
+
+        section_name = escape(
+            str(section["name"])
+        )
 
         sections_html.append(
             '<section class="personal-section">\n'
             f'  <h3>{section_name}</h3>\n'
-            + "\n".join(content)
-            + '\n</section>'
+            f'{content}\n'
+            '</section>'
         )
 
     if not sections_html:
+
         return (
             '<p class="course-empty">'
             'Personal projects will appear here as they are added.'
@@ -194,52 +362,83 @@ def render_personal_projects(data):
 # =========================
 
 def main():
+
     if not INDEX.exists():
-        raise SystemExit(f"Missing HTML file: {INDEX}")
 
-    html = INDEX.read_text(encoding="utf-8")
+        raise SystemExit(
+            f"Missing HTML file: {INDEX}"
+        )
 
-    # Validate placeholders before processing anything.
+    html = INDEX.read_text(
+        encoding="utf-8"
+    )
+
+    # Validate placeholders
+
     for placeholder in (
         COURSE_PLACEHOLDER,
-        PERSONAL_PLACEHOLDER,
+        PERSONAL_PLACEHOLDER
     ):
+
         count = html.count(placeholder)
 
         if count != 1:
+
             raise SystemExit(
                 f"Expected exactly one {placeholder} "
                 f"in {INDEX}, found {count}"
             )
 
-    # Load both JSON files.
-    course_data = load_json(PROJECTS_FILE)
-    personal_data = load_json(PERSONAL_FILE)
+    # Load JSON
 
-    # Render both project columns.
-    course_html = render_course(course_data)
-    personal_html = render_personal_projects(personal_data)
+    course_data = load_json(
+        PROJECTS_FILE
+    )
 
-    # Replace placeholders in memory.
+    personal_data = load_json(
+        PERSONAL_FILE
+    )
+
+    # Generate listings
+
+    course_html = render_course(
+        course_data
+    )
+
+    personal_html = render_personal_projects(
+        personal_data
+    )
+
+    # Replace placeholders in memory
+
     generated = html.replace(
         COURSE_PLACEHOLDER,
-        course_html,
+        course_html
     )
 
     generated = generated.replace(
         PERSONAL_PLACEHOLDER,
-        personal_html,
+        personal_html
     )
 
-    # Write only after all processing succeeds.
-    INDEX.write_text(generated, encoding="utf-8")
+    # Write homepage only after success
 
-    course_sections = len(course_data.get("sections", []))
-    personal_sections = len(personal_data.get("sections", []))
+    INDEX.write_text(
+        generated,
+        encoding="utf-8"
+    )
 
     print("Homepage generated successfully.")
-    print(f"Course sections: {course_sections}")
-    print(f"Personal project sections: {personal_sections}")
+
+    print(
+        "Course sections:",
+        len(course_data.get("sections", []))
+    )
+
+    print(
+        "Personal sections:",
+        len(personal_data.get("sections", []))
+    )
 
 
 if __name__ == "__main__":
