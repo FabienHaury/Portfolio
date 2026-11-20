@@ -22,8 +22,6 @@ transition: background-color 250ms ease, color 250ms ease; }
 
 a { color: inherit; -webkit-tap-highlight-color: transparent; }
 
-{ background: var(--accent); color: white; }
-
 /* ========================= HERO ========================= */
 
 .hero { --hero-bg: #f7f7f2; --hero-text: #171914; --hero-muted: #74776e; --hero-line: #dedfd6; --hero-accent: #426b52;
@@ -493,3 +491,88 @@ body.dark footer a { color: #60a5fa; }
 .hero-bottom { font-size: 0.6rem; }
 
 .theme-toggle { top: 12px; right: 12px; width: 38;}
+
+
+/* =========================
+   PROJECT PREVIEWS
+========================= */
+
+.project-preview {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  background: var(--page-bg);
+  border: 1px solid var(--card-border);
+}
+
+.project-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.project-card:hover .project-preview img {
+  transform: scale(1.035);
+}
+
+/* =========================
+   PROJECT TYPE
+========================= */
+
+.project-type {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 4px 7px;
+
+  border: 1px solid var(--tag-border);
+  border-radius: 4px;
+
+  background: var(--tag-bg);
+  color: var(--tag-text);
+
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* =========================
+   NESTED COURSE SECTIONS
+========================= */
+
+.course-subsection {
+  margin: 24px 0 0;
+}
+
+.course-subsection > h4 {
+  margin: 0 0 16px;
+
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.course-subsection > .course-subsection {
+  margin-left: 12px;
+}
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark .project-preview {
+  background: #111410;
+  border-color: #30362e;
+}
+
+body.dark .project-type {
+  background: #20291e;
+  border-color: #3a4935;
+  color: #a5cf91;
+}
+
