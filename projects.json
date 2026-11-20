@@ -7,6 +7,8 @@
         {
           "name": "Pokemon project",
           "description": "An interactive Pokémon explorer built with React to apply core concepts such as components, props, and useState.",
+          "languages": ["React", "JavaScript"],
+          "type": "interactive",
           "url": "https://fabienhaury.github.io/react-foundation/"
         }
       ]
@@ -17,6 +19,8 @@
         {
           "name": "Where our students come from",
           "description": "First and simple graphs made with D3.js & React.",
+          "languages": ["D3.js", "React"],
+          "type": "website",
           "url": "https://fabienhaury.github.io/Introduction-first-graph/"
         }
       ]
@@ -27,6 +31,8 @@
         {
           "name": "The Pie Chart Experiment",
           "description": "Exploring pie charts, their limitations, and better data visualization alternatives with D3.js & React.",
+          "languages": ["D3.js", "React"],
+          "type": "website",
           "url": "https://fabienhaury.github.io/svg/"
         }
       ]
@@ -37,6 +43,8 @@
         {
           "name": "Recreating The Economist!",
           "description": "Recreation of one of The Economist's graphics, demonstrating an understanding of scales with D3.js.",
+          "languages": ["D3.js", "React"],
+          "type": "website",
           "url": "https://fabienhaury.github.io/scales/"
         }
       ]
@@ -47,6 +55,8 @@
         {
           "name": "Creating and understanding axes.",
           "description": "Data visualization exploring global patterns through different scales and clustering methods.",
+          "languages": ["D3.js", "React"],
+          "type": "website",
           "url": "https://fabienhaury.github.io/axes/"
         }
       ]
