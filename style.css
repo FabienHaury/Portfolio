@@ -1,110 +1,247 @@
-/* ========================= GLOBAL ========================= */
 
-*, *::before, *::after { box-sizing: border-box; }
+/* =========================================================
+   GLOBAL STYLES & VARIABLES
+========================================================= */
 
-:root { color-scheme: light;
+*, *::before, *::after {
+  box-sizing: border-box;
+}
 
---page-bg: #f7f7f2; --page-text: #171914; --muted: #74776e; --line: #dedfd6;
+:root {
+  color-scheme: light;
 
---card-bg: #fbfbf8; --card-bg-hover: #ffffff; --card-text: #24271f; --card-border: #e1e3da; --card-shadow: rgba(23, 25, 20, 0.04);
+  --page-bg: #f7f7f2;
+  --page-text: #171914;
+  --muted: #74776e;
+  --line: #dedfd6;
 
---accent: #426b52;
+  --card-bg: #fbfbf8;
+  --card-bg-hover: #ffffff;
+  --card-text: #24271f;
+  --card-border: #e1e3da;
+  --card-shadow: rgba(23, 25, 20, 0.04);
 
---tag-bg: #edf3eb; --tag-text: #426b52; --tag-border: #d7e2d5;
+  --accent: #426b52;
 
---footer-text: #64748b; --footer-link: #2563eb; }
+  --tag-bg: #edf3eb;
+  --tag-text: #426b52;
+  --tag-border: #d7e2d5;
 
-html { scroll-behavior: smooth; scroll-padding-top: 30px; }
+  --footer-text: #64748b;
+  --footer-link: #2563eb;
+}
 
-body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--page-bg); color: var(--page-text); -webkit-font-smoothing: antialiased;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 30px;
+}
 
-transition: background-color 250ms ease, color 250ms ease; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page-bg);
+  color: var(--page-text);
+  -webkit-font-smoothing: antialiased;
 
-a { color: inherit; -webkit-tap-highlight-color: transparent; }
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
+}
 
-/* ========================= HERO ========================= */
+a {
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
 
-.hero { --hero-bg: #f7f7f2; --hero-text: #171914; --hero-muted: #74776e; --hero-line: #dedfd6; --hero-accent: #426b52;
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
 
-min-height: 100vh; min-height: 100svh;
 
-display: flex; align-items: center;
+/* =========================================================
+   HERO SECTION
+========================================================= */
 
-padding: 30px clamp(24px, 6vw, 100px) 24px;
+.hero {
+  --hero-bg: #f7f7f2;
+  --hero-text: #171914;
+  --hero-muted: #74776e;
+  --hero-line: #dedfd6;
+  --hero-accent: #426b52;
 
-background: var(--hero-bg); color: var(--hero-text);
+  min-height: 100vh;
+  min-height: 100svh;
 
-overflow: hidden;
+  display: flex;
+  align-items: center;
 
-transition: background-color 250ms ease, color 250ms ease; }
+  padding: 30px clamp(24px, 6vw, 100px) 24px;
 
-.hero-inner { width: 100%; max-width: 1440px; margin: 0 auto; }
+  background: var(--hero-bg);
+  color: var(--hero-text);
 
-/* ========================= TOP META ========================= */
+  overflow: hidden;
 
-.hero-meta, .hero-bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
+}
 
-font-family: monospace; font-size: 0.68rem; line-height: 1.5; letter-spacing: 0.1em;
+.hero-inner {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
 
-color: var(--hero-muted); }
 
-.hero-meta { padding-bottom: 20px; border-bottom: 1px solid var(--hero-line); }
+/* =========================================================
+   HERO TOP META
+========================================================= */
 
-.hero-brand { color: var(--hero-text); font-size: 1.4rem; font-weight: 800; letter-spacing: -0.09em; text-decoration: none; }
+.hero-meta,
+.hero-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 
-.hero-brand span { color: var(--hero-accent); }
+  font-family: monospace;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
 
-.hero-nav { color: var(--hero-text); text-decoration: none; transition: color 180ms ease; }
+  color: var(--hero-muted);
+}
 
-.hero-nav span { display: inline-block; transition: transform 180ms ease; }
+.hero-meta {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--hero-line);
+}
 
-.hero-nav:hover { color: var(--hero-accent); }
+.hero-brand {
+  color: var(--hero-text);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.09em;
+  text-decoration: none;
+}
 
-.hero-nav:hover span { transform: translateY(3px); }
+.hero-brand span {
+  color: var(--hero-accent);
+}
 
-/* ========================= MAIN HERO LAYOUT ========================= */
 
-.hero-main { display: grid; grid-template-columns: 1.05fr 0.95fr; align-items: center; gap: clamp(30px, 6vw, 100px);
+/* =========================================================
+   HERO MAIN LAYOUT
+========================================================= */
 
-padding: clamp(45px, 8vh, 100px) 0; }
+.hero-main {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
 
-.hero-copy { min-width: 0; animation: hero-enter 700ms ease both; }
+  gap: clamp(30px, 6vw, 100px);
 
-@keyframes hero-enter { from { opacity: 0; transform: translateY(18px); }
+  padding: clamp(45px, 8vh, 100px) 0;
+}
 
-to { opacity: 1; transform: translateY(0); } }
+.hero-copy {
+  min-width: 0;
+  animation: hero-enter 700ms ease both;
+}
 
-/* ========================= PROFILE PHOTO ========================= */
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
 
-.avatar { width: 64px; height: 64px; margin-bottom: 32px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-overflow: hidden; border: 2px solid var(--hero-bg); border-radius: 50%;
 
-box-shadow: 0 0 0 1px var(--hero-line); }
+/* =========================================================
+   PROFILE PHOTO
+========================================================= */
 
-.avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.avatar {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 32px;
 
-/* ========================= HERO TYPOGRAPHY ========================= */
+  overflow: hidden;
 
-.eyebrow { display: flex; align-items: center; gap: 10px;
+  border: 2px solid var(--hero-bg);
+  border-radius: 50%;
 
-margin: 0 0 24px;
+  box-shadow: 0 0 0 1px var(--hero-line);
+}
 
-color: var(--hero-muted); font-family: monospace; font-size: 0.72rem; letter-spacing: 0.12em; }
+.avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-.status-dot { width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: var(--hero-accent); }
 
-.hero h1 { margin: 0;
+/* =========================================================
+   HERO TYPOGRAPHY
+========================================================= */
 
-font-size: clamp(4rem, 8.3vw, 8.5rem); font-weight: 750; line-height: 0.88; letter-spacing: -0.085em; }
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-.hero h1 span { color: var(--hero-accent); }
+  margin: 0 0 24px;
 
-.hero-description { max-width: 430px; margin: 30px 0;
+  color: var(--hero-muted);
+  font-family: monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
 
-color: var(--hero-muted); font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1.8; }
+.status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
 
-/* ========================= HERO LINKS ========================= */
+  border-radius: 50%;
+  background: var(--hero-accent);
+}
+
+.hero h1 {
+  margin: 0;
+
+  font-size: clamp(4rem, 8.3vw, 8.5rem);
+  font-weight: 750;
+  line-height: 0.88;
+  letter-spacing: -0.085em;
+}
+
+.hero h1 span {
+  color: var(--hero-accent);
+}
+
+.hero-description {
+  max-width: 430px;
+  margin: 30px 0;
+
+  color: var(--hero-muted);
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   HERO LINKS
+========================================================= */
 
 .links {
   display: flex;
@@ -118,8 +255,16 @@ color: var(--hero-muted); font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+
   padding: 15px 18px;
+
   border: 1px solid var(--hero-text);
+
+  text-decoration: none;
+
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .links .primary-link:hover {
@@ -139,6 +284,7 @@ color: var(--hero-muted); font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1
   font-family: monospace;
   font-size: 0.75rem;
   text-decoration: none;
+
   transition: color 180ms ease;
 }
 
@@ -146,74 +292,140 @@ color: var(--hero-muted); font-size: clamp(1rem, 1.4vw, 1.15rem); line-height: 1
   color: var(--hero-accent);
 }
 
-/* ========================= D3.JS VISUALIZATION ========================= */
 
-.hero-visual { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1; justify-self: end;
+/* =========================================================
+   D3.JS HERO VISUALIZATION
+========================================================= */
 
-overflow: hidden; border: 1px solid var(--hero-line); border-radius: 50%; }
+.hero-visual {
+  position: relative;
 
-#heroViz { display: block; width: 100%; height: 100%; }
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 1;
 
-/* ========================= HERO BOTTOM ========================= */
+  justify-self: end;
 
-.hero-bottom { padding-top: 20px; border-top: 1px solid var(--hero-line); }
+  overflow: hidden;
 
-/* ========================= THEME TOGGLE ========================= */
+  border: 1px solid var(--hero-line);
+  border-radius: 50%;
+}
 
-.theme-toggle { position: fixed; z-index: 1000; top: 20px; right: 20px;
+#heroViz {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 
-display: grid; place-items: center;
 
-width: 44px; height: 44px; padding: 0;
+/* =========================================================
+   HERO BOTTOM
+========================================================= */
 
-border: 1px solid #dedfd6; border-radius: 50%;
+.hero-bottom {
+  padding-top: 20px;
+  border-top: 1px solid var(--hero-line);
+}
 
-background: #f7f7f2; color: #171914;
 
-font-size: 19px; cursor: pointer;
+/* =========================================================
+   THEME TOGGLE
+========================================================= */
 
-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+.theme-toggle {
+  position: fixed;
+  z-index: 1000;
+  top: 20px;
+  right: 20px;
 
-transition: transform 180ms ease, background-color 180ms ease, color 180ms ease; }
+  display: grid;
+  place-items: center;
 
-.theme-toggle:hover { transform: scale(1.08); }
+  width: 44px;
+  height: 44px;
+  padding: 0;
 
-.theme-toggle:focus-visible, a:focus-visible { outline: 2px solid #426b52; outline-offset: 4px; }
+  border: 1px solid #dedfd6;
+  border-radius: 50%;
 
-/* ========================= PROJECTS SECTION ========================= */
+  background: #f7f7f2;
+  color: #171914;
 
-.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: clamp(28px, 4vw, 64px);
+  font-size: 19px;
+  cursor: pointer;
 
-width: 100%; max-width: 1600px; margin: 0 auto; padding: 90px clamp(22px, 5vw, 80px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 
-background: transparent; color: var(--page-text); text-align: center; }
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease;
+}
 
-.project-column { min-width: 0; }
+.theme-toggle:hover {
+  transform: scale(1.08);
+}
 
-/* ========================= PROJECT HEADINGS ========================= */
+/* =========================================================
+   PROJECTS SECTION
+========================================================= */
 
-.project-column .course-header { margin-bottom: 40px; }
+.projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
 
-.course-header h2 { margin: 0;
+  gap: clamp(28px, 4vw, 64px);
 
-font-size: clamp(2rem, 3.2vw, 3rem); font-weight: 750; letter-spacing: -0.065em; line-height: 1.05; }
+  width: 100%;
+  max-width: 1600px;
 
-.course-header p { max-width: 440px; margin: 18px auto 0;
+  margin: 0 auto;
+  padding: 90px clamp(22px, 5vw, 80px);
 
-color: var(--muted); font-size: 1rem; line-height: 1.8; }
+  background: transparent;
+  color: var(--page-text);
 
-/* ========================= COURSE SECTIONS ========================= */
+  text-align: center;
+}
 
-.course-section { margin-bottom: 42px; }
+.project-column {
+  min-width: 0;
+}
 
-.course-section:last-child { margin-bottom: 0; }
 
-.course-section h3 { margin: 0 0 20px; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.025em; text-transform: capitalize; }
+/* =========================================================
+   PROJECT HEADINGS
+========================================================= */
+
+.project-column .course-header {
+  margin-bottom: 40px;
+}
+
+.course-header h2 {
+  margin: 0;
+
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 750;
+  letter-spacing: -0.065em;
+  line-height: 1.05;
+}
+
+.course-header p {
+  max-width: 440px;
+  margin: 18px auto 0;
+
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
 
 .course-link {
   display: inline-flex;
   align-items: center;
   gap: 12px;
+
   margin-top: 20px;
   padding: 12px 16px;
 
@@ -240,316 +452,36 @@ color: var(--muted); font-size: 1rem; line-height: 1.8; }
   outline-offset: 4px;
 }
 
-/* ========================= PROJECT LISTS ========================= */
 
-.project-list, .course-section ul { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px;
+/* =========================================================
+   COURSE SECTIONS
+========================================================= */
 
-width: 100%; margin: 0; padding: 0;
-
-list-style: none; text-align: left; }
-
-/* ========================= PROJECT CARDS ========================= */
-
-.project-card { position: relative; min-width: 0; margin: 0; padding: 0;
-
-border: 1px solid var(--card-border); border-radius: 14px;
-
-background-color: var(--card-bg); color: var(--card-text);
-
-box-shadow: 0 2px 5px var(--card-shadow);
-
-transition: border-color 200ms ease, background-color 200ms ease, color 200ms ease, transform 200ms ease, box-shadow 200ms ease; }
-
-.project-card:hover { transform: translateY(-3px); border-color: var(--accent); background-color: var(--card-bg-hover); box-shadow: 0 12px 28px rgba(23, 25, 20, 0.07); }
-
-/* ========================= CLICKABLE PROJECT LINKS ========================= */
-
-.project-card-link, .project-card-link:link, .project-card-link:visited, .project-card-link:hover, .project-card-link:focus, .project-card-link:active { position: relative; display: block; width: 100%; height: 100%; padding: 22px 48px 22px 24px;
-
-background-color: transparent; color: inherit; text-decoration: none; border-radius: inherit; }
-
-.project-card-link *, .project-card-link *:hover, .project-card-link *:focus, .project-card-link *:visited { text-decoration: none; }
-
-/* Project title */
-
-.project-card-link h4 { margin: 0; padding: 0;
-
-color: inherit; font-size: 1rem; font-weight: 650; line-height: 1.5;
-
-overflow-wrap: anywhere; }
-
-/* Disable old arrow pseudo-elements */
-
-.project-card-link h4::before, .project-card-link h4::after { content: none; display: none; }
-
-/* Project description */
-
-.project-description { margin: 10px 0 0; padding: 0;
-
-color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
-
-/* ========================= PROJECT LANGUAGES ========================= */
-
-.project-languages { display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
-
-margin-top: 12px; }
-
-.language-tag { display: inline-block; padding: 4px 8px;
-
-border: 1px solid var(--tag-border); border-radius: 5px;
-
-background-color: var(--tag-bg); color: var(--tag-text);
-
-font-family: monospace; font-size: 0.7rem; line-height: 1.4; letter-spacing: 0.02em;
-
-transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease; }
-
-/* ========================= PROJECT ARROW ========================= */
-
-.project-arrow { position: absolute; top: 22px; right: 24px;
-
-display: block;
-
-color: var(--accent); font-size: 1.1rem; line-height: 1.5;
-
-pointer-events: none;
-
-transition: transform 200ms ease; }
-
-.project-card:hover .project-arrow { transform: translate(2px, -2px); }
-
-/* Keyboard accessibility */
-
-.project-card-link:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; border-radius: 14px; }
-
-/* ========================= PERSONAL PROJECT HIERARCHY ========================= */
-
-.personal-section { margin-bottom: 42px; }
-
-.personal-section:last-child { margin-bottom: 0; }
-
-.personal-section > h3 { margin: 0 0 20px;
-
-font-size: 1.15rem; font-weight: 700; letter-spacing: -0.025em; }
-
-.personal-section .course-section { margin: 24px 0 0; }
-
-.personal-section .course-section h4 { margin: 0 0 14px;
-
-color: var(--muted); font-size: 0.9rem; font-weight: 600; line-height: 1.5; }
-
-.personal-section > .project-list { margin-top: 0; }
-
-/* ========================= EMPTY STATE ========================= */
-
-.course-empty { margin: 0; padding: 24px;
-
-border: 1px dashed var(--line); border-radius: 14px;
-
-color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
-
-/* ========================= FOOTER ========================= */
-
-footer { display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
-
-width: 100%; padding: 30px 20px;
-
-border-top: 1px solid var(--line); background: transparent;
-
-color: var(--footer-text); font-size: 0.9rem; text-align: center; }
-
-footer a { margin-left: 4px; color: var(--footer-link); text-decoration: none; }
-
-footer a:hover { text-decoration: underline; }
-
-/* ================================================== DARK MODE All project colors are controlled by variables. The class is added to BODY by script.js. ================================================== */
-
-body.dark { color-scheme: dark;
-
---page-bg: #0b0d10; --page-text: #f1f5f9; --muted: #a0a69a; --line: #30362e;
-
---card-bg: #151914; --card-bg-hover: #1b2119; --card-text: #edf0e7; --card-border: #30362e; --card-shadow: rgba(0, 0, 0, 0.18);
-
---accent: #a5cf91;
-
---tag-bg: #20291e; --tag-text: #a5cf91; --tag-border: #3a4935;
-
---footer-text: #94a3b8; --footer-link: #60a5fa; }
-
-/* Hero */
-
-body.dark .hero { --hero-bg: #111410; --hero-text: #edf0e7; --hero-muted: #a0a69a; --hero-line: #30362e; --hero-accent: #a5cf91; }
-
-/* Theme toggle */
-
-body.dark .theme-toggle { border-color: #30362e; background-color: #111410; color: #edf0e7; }
-
-/* Projects background */
-
-body.dark .projects { background-color: #0f1115; color: #f1f5f9; }
-
-/* Explicit card rules: these also override a stale or overly broad background declaration from other CSS rules. */
-
-body.dark .projects .project-card { background: #151914 !important; background-color: #151914 !important;
-
-border-color: #30362e; color: #edf0e7;
-
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18); }
-
-body.dark .projects .project-card:hover { background: #1b2119 !important; background-color: #1b2119 !important;
-
-border-color: #a5cf91; color: #ffffff;
-
-box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25); }
-
-/* Keep card links transparent */
-
-body.dark .projects .project-card .project-card-link, body.dark .projects .project-card .project-card-link:link, body.dark .projects .project-card .project-card-link:visited, body.dark .projects .project-card .project-card-link:hover, body.dark .projects .project-card .project-card-link:focus, body.dark .projects .project-card .project-card-link:active { background: transparent !important; background-color: transparent !important;
-
-color: #edf0e7; text-decoration: none; }
-
-/* Card titles */
-
-body.dark .projects .project-card .project-card-link h4 { color: #edf0e7; }
-
-/* Card descriptions */
-
-body.dark .projects .project-card .project-description { color: #a0a69a; }
-
-/* Card arrows */
-
-body.dark .projects .project-card .project-arrow { color: #a5cf91; }
-
-/* Language tags */
-
-body.dark .projects .project-card .language-tag { background: #20291e !important; background-color: #20291e !important;
-
-border-color: #3a4935; color: #a5cf91; }
-
-/* Keyboard focus */
-
-body.dark .projects .project-card-link:focus-visible { outline-color: #a5cf91; }
-
-/* Headings */
-
-body.dark .course-header h2, body.dark .personal-section > h3, body.dark .course-section h3 { color: #f1f5f9; }
-
-body.dark .course-header p { color: #a0a69a; }
-
-/* Empty state */
-
-body.dark .course-empty { border-color: #30362e; color: #a0a69a; }
-
-/* Personal project hierarchy */
-
-body.dark .personal-section .course-section h4 { color: #a0a69a; }
-
-/* Footer */
-
-body.dark footer { border-color: #29303a; background: #0b0d10; color: #94a3b8; }
-
-body.dark footer a { color: #60a5fa; }
-
-/* ========================= TABLET ========================= */
-
-@media (max-width: 800px) { .hero { min-height: auto; padding: 24px 22px; }
-
-.hero-meta { padding-right: 40px; flex-wrap: wrap; }
-
-.hero-main { grid-template-columns: 1fr; gap: 45px; padding: 55px 0 40px; }
-
-.hero h1 { font-size: clamp(4.5rem, 15vw, 7rem); }
-
-.hero-visual { width: min(100%, 470px); justify-self: center; }
-
-.hero-bottom { align-items: flex-start; flex-direction: column; }
-
-.projects { grid-template-columns: minmax(0, 1fr); gap: 60px; padding: 65px 22px; }
-
-.project-column .course-header { margin-bottom: 30px; }
-
-.course-header h2 { font-size: clamp(2rem, 6vw, 2.8rem); } }
-
-/* ========================= MOBILE ========================= */
-
-@media (max-width: 420px) { .hero-meta span:last-child { display: none; }
-
-.hero-main { padding-top: 45px; }
-
-.hero h1 { font-size: 19vw; }
-
-.avatar { width: 56px; height: 56px; margin-bottom: 26px; }
-
-.links {
-  gap: 18px;
+.course-section {
+  margin-bottom: 42px;
 }
 
-.links .primary-link {
-  width: auto;
+.course-section:last-child {
+  margin-bottom: 0;
 }
 
-.hero-bottom { font-size: 0.6rem; }
+.course-section h3 {
+  margin: 0 0 20px;
 
-.theme-toggle { top: 12px; right: 12px; width: 38;}
-
-
-/* =========================
-   PROJECT PREVIEWS
-========================= */
-
-.project-preview {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  margin-bottom: 16px;
-  border-radius: 8px;
-  background: var(--page-bg);
-  border: 1px solid var(--card-border);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-transform: capitalize;
 }
-
-.project-preview img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 300ms ease;
-}
-
-.project-card:hover .project-preview img {
-  transform: scale(1.035);
-}
-
-/* =========================
-   PROJECT TYPE
-========================= */
-
-.project-type {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 4px 7px;
-
-  border: 1px solid var(--tag-border);
-  border-radius: 4px;
-
-  background: var(--tag-bg);
-  color: var(--tag-text);
-
-  font-family: monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* =========================
-   NESTED COURSE SECTIONS
-========================= */
 
 .course-subsection {
   margin: 24px 0 0;
 }
 
-.course-subsection > h4 {
-  margin: 0 0 16px;
+.course-subsection > h4,
+.course-subsection > h5,
+.course-subsection > h6 {
+  margin: 0 0 14px;
 
   color: var(--muted);
   font-size: 0.9rem;
@@ -557,22 +489,722 @@ body.dark footer a { color: #60a5fa; }
   line-height: 1.5;
 }
 
-.course-subsection > .course-subsection {
-  margin-left: 12px;
+
+/* =========================================================
+   PROJECT LISTS
+========================================================= */
+
+.project-list,
+.course-section ul,
+.course-subsection ul {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+
+  width: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+  text-align: left;
 }
 
-/* =========================
+
+/* =========================================================
+   PROJECT CARDS
+========================================================= */
+
+.project-card {
+  position: relative;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+
+  background: var(--card-bg);
+  color: var(--card-text);
+
+  box-shadow: 0 2px 5px var(--card-shadow);
+
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+
+  border-color: var(--accent);
+  background: var(--card-bg-hover);
+
+  box-shadow: 0 12px 28px rgba(23, 25, 20, 0.07);
+}
+
+
+/* =========================================================
+   PROJECT CARD LINKS
+========================================================= */
+
+.project-card-link,
+.project-card-link:link,
+.project-card-link:visited,
+.project-card-link:hover,
+.project-card-link:focus,
+.project-card-link:active {
+  position: relative;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 22px 48px 22px 24px;
+
+  background: transparent;
+  color: inherit;
+
+  text-decoration: none;
+  border-radius: inherit;
+}
+
+.project-card-link *,
+.project-card-link *:hover,
+.project-card-link *:focus,
+.project-card-link *:visited {
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   PROJECT PREVIEWS
+========================================================= */
+
+/*
+   Screenshots and static visualizations.
+
+   The preview area has a fixed maximum height.
+   Images are never allowed to overflow it.
+*/
+
+.project-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 420px;
+  height: 220px;
+
+  margin: 0 auto 20px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+
+  background: var(--page-bg);
+}
+
+.project-preview img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  object-position: center;
+
+  transition: transform 250ms ease;
+}
+
+.project-card:hover .project-preview img {
+  transform: scale(1.025);
+}
+
+
+/* =========================================================
+   PROJECT TITLES
+========================================================= */
+
+.project-card-link h4 {
+  margin: 0;
+  padding: 0;
+
+  color: inherit;
+
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   PROJECT TYPE
+========================================================= */
+
+.project-type {
+  display: inline-block;
+
+  margin-top: 9px;
+  padding: 4px 8px;
+
+  border: 1px solid var(--tag-border);
+  border-radius: 5px;
+
+  background: var(--tag-bg);
+  color: var(--tag-text);
+
+  font-family: monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   PROJECT DESCRIPTION
+========================================================= */
+
+.project-description {
+  margin: 10px 0 0;
+  padding: 0;
+
+  color: var(--muted);
+
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   PROJECT LANGUAGES
+========================================================= */
+
+.project-languages {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 12px;
+}
+
+.language-tag {
+  display: inline-block;
+
+  padding: 4px 8px;
+
+  border: 1px solid var(--tag-border);
+  border-radius: 5px;
+
+  background: var(--tag-bg);
+  color: var(--tag-text);
+
+  font-family: monospace;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   PROJECT ARROW
+========================================================= */
+
+.project-arrow {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+
+  display: block;
+
+  color: var(--accent);
+
+  font-size: 1.1rem;
+  line-height: 1.5;
+
+  pointer-events: none;
+
+  transition: transform 200ms ease;
+}
+
+.project-card:hover .project-arrow {
+  transform: translate(2px, -2px);
+}
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+.project-card-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -4px;
+
+  border-radius: 14px;
+}
+
+
+/* =========================================================
+   PERSONAL PROJECT HIERARCHY
+========================================================= */
+
+.personal-section {
+  margin-bottom: 42px;
+}
+
+.personal-section:last-child {
+  margin-bottom: 0;
+}
+
+.personal-section > h3 {
+  margin: 0 0 20px;
+
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.personal-section > .project-list {
+  margin-top: 0;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.course-empty {
+  margin: 0;
+  padding: 24px;
+
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+
+  color: var(--muted);
+
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 100%;
+  padding: 30px 20px;
+
+  border-top: 1px solid var(--line);
+
+  background: transparent;
+  color: var(--footer-text);
+
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+footer a {
+  margin-left: 4px;
+
+  color: var(--footer-link);
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+
+/* =========================================================
    DARK MODE
-========================= */
+========================================================= */
+
+body.dark {
+  color-scheme: dark;
+
+  --page-bg: #0b0d10;
+  --page-text: #f1f5f9;
+  --muted: #a0a69a;
+  --line: #30362e;
+
+  --card-bg: #151914;
+  --card-bg-hover: #1b2119;
+  --card-text: #edf0e7;
+  --card-border: #30362e;
+  --card-shadow: rgba(0, 0, 0, 0.18);
+
+  --accent: #a5cf91;
+
+  --tag-bg: #20291e;
+  --tag-text: #a5cf91;
+  --tag-border: #3a4935;
+
+  --footer-text: #94a3b8;
+  --footer-link: #60a5fa;
+}
+
+
+/* =========================================================
+   DARK MODE: HERO
+========================================================= */
+
+body.dark .hero {
+  --hero-bg: #111410;
+  --hero-text: #edf0e7;
+  --hero-muted: #a0a69a;
+  --hero-line: #30362e;
+  --hero-accent: #a5cf91;
+}
+
+
+/* =========================================================
+   DARK MODE: THEME TOGGLE
+========================================================= */
+
+body.dark .theme-toggle {
+  border-color: #30362e;
+
+  background: #111410;
+  color: #edf0e7;
+}
+
+
+/* =========================================================
+   DARK MODE: PROJECTS
+========================================================= */
+
+body.dark .projects {
+  background: #0f1115;
+  color: #f1f5f9;
+}
+
+
+/* =========================================================
+   DARK MODE: PROJECT CARDS
+========================================================= */
+
+body.dark .projects .project-card {
+  background: #151914;
+
+  border-color: #30362e;
+  color: #edf0e7;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+body.dark .projects .project-card:hover {
+  background: #1b2119;
+
+  border-color: #a5cf91;
+  color: #ffffff;
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   DARK MODE: CARD LINKS
+========================================================= */
+
+body.dark .projects .project-card .project-card-link,
+body.dark .projects .project-card .project-card-link:link,
+body.dark .projects .project-card .project-card-link:visited,
+body.dark .projects .project-card .project-card-link:hover,
+body.dark .projects .project-card .project-card-link:focus,
+body.dark .projects .project-card .project-card-link:active {
+  background: transparent;
+  color: #edf0e7;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   DARK MODE: PREVIEWS
+========================================================= */
 
 body.dark .project-preview {
   background: #111410;
   border-color: #30362e;
 }
 
-body.dark .project-type {
+
+/* =========================================================
+   DARK MODE: TITLES & DESCRIPTIONS
+========================================================= */
+
+body.dark .projects .project-card .project-card-link h4 {
+  color: #edf0e7;
+}
+
+body.dark .projects .project-card .project-description {
+  color: #a0a69a;
+}
+
+
+/* =========================================================
+   DARK MODE: PROJECT TYPE & LANGUAGES
+========================================================= */
+
+body.dark .projects .project-card .project-type,
+body.dark .projects .project-card .language-tag {
   background: #20291e;
+
   border-color: #3a4935;
   color: #a5cf91;
 }
 
+
+/* =========================================================
+   DARK MODE: PROJECT ARROWS
+========================================================= */
+
+body.dark .projects .project-card .project-arrow {
+  color: #a5cf91;
+}
+
+
+/* =========================================================
+   DARK MODE: HEADINGS
+========================================================= */
+
+body.dark .course-header h2,
+body.dark .personal-section > h3,
+body.dark .course-section h3 {
+  color: #f1f5f9;
+}
+
+body.dark .course-header p {
+  color: #a0a69a;
+}
+
+
+/* =========================================================
+   DARK MODE: SUBSECTIONS
+========================================================= */
+
+body.dark .course-subsection > h4,
+body.dark .course-subsection > h5,
+body.dark .course-subsection > h6 {
+  color: #a0a69a;
+}
+
+
+/* =========================================================
+   DARK MODE: EMPTY STATES
+========================================================= */
+
+body.dark .course-empty {
+  border-color: #30362e;
+  color: #a0a69a;
+}
+
+
+/* =========================================================
+   DARK MODE: FOOTER
+========================================================= */
+
+body.dark footer {
+  border-color: #29303a;
+  background: #0b0d10;
+  color: #94a3b8;
+}
+
+body.dark footer a {
+  color: #60a5fa;
+}
+
+
+/* =========================================================
+   DARK MODE: FOCUS
+========================================================= */
+
+body.dark a:focus-visible,
+body.dark button:focus-visible {
+  outline-color: #a5cf91;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 800px) {
+
+  /* Hero */
+
+  .hero {
+    min-height: auto;
+    padding: 24px 22px;
+  }
+
+  .hero-meta {
+    padding-right: 40px;
+    flex-wrap: wrap;
+  }
+
+  .hero-main {
+    grid-template-columns: 1fr;
+    gap: 45px;
+
+    padding: 55px 0 40px;
+  }
+
+  .hero h1 {
+    font-size: clamp(4.5rem, 15vw, 7rem);
+  }
+
+  .hero-visual {
+    width: min(100%, 470px);
+    justify-self: center;
+  }
+
+  .hero-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+
+  /* Projects */
+
+  .projects {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 60px;
+
+    padding: 65px 22px;
+  }
+
+  .project-column .course-header {
+    margin-bottom: 30px;
+  }
+
+  .course-header h2 {
+    font-size: clamp(2rem, 6vw, 2.8rem);
+  }
+
+
+  /* Project previews */
+
+  .project-preview {
+    max-width: 500px;
+    height: 240px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  /* Hero */
+
+  .hero-meta span:last-child {
+    display: none;
+  }
+
+  .hero-main {
+    padding-top: 45px;
+  }
+
+  .hero h1 {
+    font-size: 19vw;
+  }
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 26px;
+  }
+
+  .links {
+    gap: 18px;
+  }
+
+  .links .primary-link {
+    width: auto;
+  }
+
+  .hero-bottom {
+    font-size: 0.6rem;
+  }
+
+  .theme-toggle {
+    top: 12px;
+    right: 12px;
+
+    width: 38px;
+    height: 38px;
+  }
+
+
+  /* Projects */
+
+  .projects {
+    padding: 55px 16px;
+  }
+
+  .project-list {
+    gap: 14px;
+  }
+
+
+  /* Project cards */
+
+  .project-card-link {
+    padding: 18px 42px 18px 18px;
+  }
+
+  .project-card-link h4 {
+    font-size: 0.95rem;
+  }
+
+  .project-description {
+    font-size: 0.85rem;
+  }
+
+
+  /* Project previews */
+
+  .project-preview {
+    height: 170px;
+    margin-bottom: 15px;
+  }
+
+  .project-arrow {
+    top: 18px;
+    right: 18px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}
