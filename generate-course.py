@@ -1,3 +1,4 @@
+
 import json
 import re
 from html import escape
@@ -12,15 +13,12 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parent
 
 INDEX = ROOT / "index.html"
-
 PROJECTS_FILE = ROOT / "projects.json"
-
 PERSONAL_FILE = ROOT / "personal-projects.json"
 
 PREVIEW_DIR = ROOT / "Images" / "previews"
 
 COURSE_PLACEHOLDER = "<!-- COURSE_LISTINGS -->"
-
 PERSONAL_PLACEHOLDER = "<!-- PERSONAL_PROJECT_LISTINGS -->"
 
 
@@ -29,16 +27,13 @@ PERSONAL_PLACEHOLDER = "<!-- PERSONAL_PROJECT_LISTINGS -->"
 # =========================
 
 def load_json(path):
-
     try:
         return json.loads(
             path.read_text(encoding="utf-8")
         )
 
     except FileNotFoundError:
-        raise SystemExit(
-            f"Missing JSON file: {path}"
-        )
+        raise SystemExit(f"Missing JSON file: {path}")
 
     except json.JSONDecodeError as exc:
         raise SystemExit(
@@ -47,18 +42,16 @@ def load_json(path):
 
 
 def safe_filename(name):
-
     return re.sub(
         r"[^a-z0-9]+",
         "-",
-        name.lower()
+        str(name).lower()
     ).strip("-")
 
 
 def valid_url(url):
-
     try:
-        parsed = urlparse(url)
+        parsed = urlparse(str(url))
 
         return (
             parsed.scheme in ("http", "https")
@@ -69,6 +62,70 @@ def valid_url(url):
         return False
 
 
+def valid_image(image):
+    """Accept local image paths and HTTP(S) image URLs."""
+
+    if not image:
+        return False
+
+    image = str(image).strip()
+
+    if not image:
+        return False
+
+    parsed = urlparse(image)
+
+    if parsed.scheme:
+        return (
+            parsed.scheme in ("http", "https")
+            and bool(parsed.netloc)
+        )
+
+    # Prevent paths from escaping the project directory.
+    image_path = (ROOT / image).resolve()
+
+    try:
+        image_path.relative_to(ROOT.resolve())
+    except ValueError:
+        return False
+
+    return image_path.is_file()
+
+
+def get_project_image(project):
+    """
+    Website and interactive projects:
+        1. Automatically generated screenshot.
+        2. Manually supplied image as fallback.
+
+    Static projects:
+        1. Manually supplied image.
+    """
+
+    project_type = str(
+        project.get("type", "")
+    ).lower()
+
+    manual_image = project.get("image", "")
+
+    if project_type in ("website", "interactive"):
+
+        preview_name = (
+            safe_filename(project.get("name", ""))
+            + ".png"
+        )
+
+        preview_path = PREVIEW_DIR / preview_name
+
+        if preview_path.is_file():
+            return "./Images/previews/" + preview_name
+
+    if valid_image(manual_image):
+        return str(manual_image).strip()
+
+    return ""
+
+
 # =========================
 # RENDER PROJECT CARD
 # =========================
@@ -76,55 +133,37 @@ def valid_url(url):
 def render_project(project):
 
     name = escape(
-        str(project["name"])
+        str(project.get("name", "Untitled project"))
     )
 
     description = escape(
         str(project.get("description", ""))
     )
 
-    url = str(project.get("url", ""))
+    raw_url = str(project.get("url", "")).strip()
 
-    if not valid_url(url):
+    if not valid_url(raw_url):
         raise SystemExit(
-            f"Invalid project URL: {project['name']}"
+            f"Invalid project URL: {project.get('name', 'Unknown project')}"
         )
 
-    url = escape(url, quote=True)
+    url = escape(raw_url, quote=True)
 
-    project_type = project.get("type", "")
+    project_type = str(
+        project.get("type", "")
+    ).strip().lower()
 
     # -------------------------
     # PROJECT IMAGE
     # -------------------------
 
-    image = project.get("image", "")
-
-    if project_type in ("website", "interactive"):
-
-        preview_path = (
-            PREVIEW_DIR
-            / (safe_filename(project["name"]) + ".png")
-        )
-
-        if preview_path.is_file():
-
-            image = (
-                "./Images/previews/"
-                + preview_path.name
-            )
-
-        else:
-            image = ""
+    image = get_project_image(project)
 
     image_html = ""
 
     if image:
 
-        image = escape(
-            str(image),
-            quote=True
-        )
+        image = escape(image, quote=True)
 
         image_html = (
             '    <div class="project-preview">\n'
@@ -142,7 +181,7 @@ def render_project(project):
     if project_type:
 
         type_label = escape(
-            str(project_type).capitalize()
+            project_type.capitalize()
         )
 
         type_html = (
@@ -248,19 +287,16 @@ def render_nested_content(section, heading_level=4):
     projects = section.get("projects", [])
 
     if projects:
-
         content.append(
             render_project_list(projects)
         )
 
     # Nested subsections
 
-    for subsection in section.get(
-        "subsections", []
-    ):
+    for subsection in section.get("subsections", []):
 
         subsection_name = escape(
-            str(subsection["name"])
+            str(subsection.get("name", "Untitled section"))
         )
 
         subcontent = render_nested_content(
@@ -299,7 +335,7 @@ def render_course(data):
             continue
 
         section_name = escape(
-            str(section["name"])
+            str(section.get("name", "Untitled section"))
         )
 
         sections_html.append(
@@ -336,7 +372,7 @@ def render_personal_projects(data):
             continue
 
         section_name = escape(
-            str(section["name"])
+            str(section.get("name", "Untitled section"))
         )
 
         sections_html.append(
@@ -364,7 +400,6 @@ def render_personal_projects(data):
 def main():
 
     if not INDEX.exists():
-
         raise SystemExit(
             f"Missing HTML file: {INDEX}"
         )
@@ -373,7 +408,9 @@ def main():
         encoding="utf-8"
     )
 
-    # Validate placeholders
+    # -------------------------
+    # VALIDATE PLACEHOLDERS
+    # -------------------------
 
     for placeholder in (
         COURSE_PLACEHOLDER,
@@ -383,33 +420,31 @@ def main():
         count = html.count(placeholder)
 
         if count != 1:
-
             raise SystemExit(
                 f"Expected exactly one {placeholder} "
                 f"in {INDEX}, found {count}"
             )
 
-    # Load JSON
+    # -------------------------
+    # LOAD JSON
+    # -------------------------
 
-    course_data = load_json(
-        PROJECTS_FILE
-    )
+    course_data = load_json(PROJECTS_FILE)
+    personal_data = load_json(PERSONAL_FILE)
 
-    personal_data = load_json(
-        PERSONAL_FILE
-    )
+    # -------------------------
+    # GENERATE LISTINGS
+    # -------------------------
 
-    # Generate listings
-
-    course_html = render_course(
-        course_data
-    )
+    course_html = render_course(course_data)
 
     personal_html = render_personal_projects(
         personal_data
     )
 
-    # Replace placeholders in memory
+    # -------------------------
+    # REPLACE PLACEHOLDERS
+    # -------------------------
 
     generated = html.replace(
         COURSE_PLACEHOLDER,
@@ -421,7 +456,9 @@ def main():
         personal_html
     )
 
-    # Write homepage only after success
+    # -------------------------
+    # WRITE HOMEPAGE
+    # -------------------------
 
     INDEX.write_text(
         generated,
@@ -438,6 +475,11 @@ def main():
     print(
         "Personal sections:",
         len(personal_data.get("sections", []))
+    )
+
+    print(
+        "Preview directory:",
+        PREVIEW_DIR
     )
 
 
