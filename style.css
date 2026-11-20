@@ -1208,3 +1208,63 @@ body.dark button:focus-visible {
   }
 
 }
+
+
+/* =========================================================
+   ALL PROJECT IMAGES
+========================================================= */
+
+/* Image container */
+.projects .project-card .project-preview {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  width: 100% !important;
+  max-width: 420px !important;
+
+  height: 220px !important;
+  max-height: 220px !important;
+
+  margin: 0 auto 20px !important;
+  padding: 8px !important;
+
+  overflow: hidden !important;
+
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+
+  background: var(--page-bg);
+}
+
+/* Every image inside a project preview */
+.projects .project-card .project-preview img {
+  display: block !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  max-width: 100% !important;
+  max-height: 100% !important;
+
+  object-fit: contain !important;
+  object-position: center !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Dark mode */
+body.dark .projects .project-card .project-preview {
+  background: #111410;
+  border-color: #30362e;
+}
+
+/* Mobile */
+@media (max-width: 420px) {
+  .projects .project-card .project-preview {
+    height: 170px !important;
+    max-height: 170px !important;
+  }
+}
+
